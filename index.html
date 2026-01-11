@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CompTIA Security+ | Project Showcase</title>
+  
+  <!-- Phosphor Icons (Professional Icon Set) -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --primary: #4f46e5;       /* Indigo 600 */
+      --primary-dark: #4338ca;  /* Indigo 700 */
+      --accent: #6366f1;        /* Indigo 500 */
+      --bg: #f8fafc;            /* Slate 50 */
+      --surface: #ffffff;
+      --text-main: #0f172a;     /* Slate 900 */
+      --text-muted: #64748b;    /* Slate 500 */
+      --border: #e2e8f0;        /* Slate 200 */
+      --border-hover: #6366f1;
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+      
+      --radius: 8px;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    /* ===== RESET & BASE ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 4rem;
+    }
+
+    /* ===== SCROLL PROGRESS ===== */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 0%;
+      z-index: 2000;
+      transition: width 0.1s ease-out;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      padding: 3rem 1rem 1rem;
+    }
+
+    .header-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ===== GRID ===== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+    }
+
+    /* ===== CARD DESIGN ===== */
+    .lab-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lab-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-md);
+    }
+
+    .lab-card:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .card-header {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--bg);
+      background: #fff;
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .lab-card h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .image-wrapper {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background-color: #f1f5f9;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+      opacity: 0; /* Hidden until loaded */
+    }
+    
+    .image-wrapper img.loaded {
+      opacity: 1;
+    }
+
+    .lab-card:hover .image-wrapper img {
+      transform: scale(1.03);
+    }
+
+    /* Placeholder for missing images */
+    .placeholder-state {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      background: #f8fafc;
+    }
+    .placeholder-state i { font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.3; }
+    .placeholder-state span { font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* ===== INFO / SPEC SHEET SECTION ===== */
+    .project-specs {
+      background: #fff;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .specs-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .spec-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .spec-label i { font-size: 1rem; }
+
+    .spec-value {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      padding: 2rem;
+    }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 95vw;
+      max-height: 90vh;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-content img {
+      display: block;
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 4px;
+      object-fit: contain;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .close-btn:hover { opacity: 1; }
+
+    /* ===== PRINT STYLES ===== */
+    @media print {
+      .progress-bar, .lightbox, .close-btn, .header-icon { display: none !important; }
+      body { background: white; padding: 0; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .lab-card { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; }
+      .project-specs { border: 1px solid #000; margin: 2rem 0; }
+      .image-wrapper { aspect-ratio: auto; height: auto; }
+    }
+    
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.75rem; }
+      .specs-container { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll Progress -->
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <header>
+    <i class="ph ph-shield-check header-icon"></i>
+    <h1>CompTIA Security+ Labs</h1>
+    <div class="subtitle">30 Labs Project</div>
+  </header>
+
+  <main class="gallery-grid" id="gallery">
+    
+    <!-- Lab 10 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 1 Details">
+      <div class="card-header">
+        <i class="ph ph-user-circle card-icon"></i>
+        <h2>Lab 10 – Using Curl Tool</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 10.png" alt="Lab 10 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 11 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 2 Details">
+      <div class="card-header">
+        <i class="ph ph-firewall card-icon"></i>
+        <h2>Lab 11 – Using Traceroute in Linux</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 11.png" alt="Lab 11 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 12 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 3 Details">
+      <div class="card-header">
+        <i class="ph ph-globe card-icon"></i>
+        <h2>Lab 12 – Ping and its various uses</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 12.png" alt="Lab 12 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 15 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 4 Details">
+      <div class="card-header">
+        <i class="ph ph-users-three card-icon"></i>
+        <h2>Lab 15 – How to setup your own Kali Linux virtual machine</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 15.png" alt="Lab 15 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 16 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 5 Details">
+      <div class="card-header">
+        <i class="ph ph-terminal-window card-icon"></i>
+        <h2>Lab 16 – Nslookup Command</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 16.png" alt="Lab 16 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 17 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 6 Details">
+      <div class="card-header">
+        <i class="ph ph-chart-line-up card-icon"></i>
+        <h2>Lab 17 – Dig Command</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 17.png" alt="Lab 17 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 18 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 7 Details">
+      <div class="card-header">
+        <i class="ph ph-bug-beetle card-icon"></i>
+        <h2>Lab 18 – Using ipconfig to view and modify network information on Windows</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 18.png" alt="Lab 18 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 19 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 8 Details">
+      <div class="card-header">
+        <i class="ph ph-hard-drives card-icon"></i>
+        <h2>Lab 19 – Using ifconfig to view and modify network information on Linux</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 19.png" alt="Lab 19 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 20 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 9 Details">
+      <div class="card-header">
+        <i class="ph ph-dns card-icon"></i> <!-- DNS icon -->
+        <h2>Lab 20 – Hping for security auditing and testing of network devices</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 20.png" alt="Lab 20 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 21 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 10 Details">
+      <div class="card-header">
+        <i class="ph ph-cloud-lock card-icon"></i>
+        <h2>Lab 21 – Using Netstat command to view networking information</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 21.png" alt="Lab 21 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 22 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 11 Details">
+      <div class="card-header">
+        <i class="ph ph-key card-icon"></i>
+        <h2>Lab 22 – Netcat</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 22.png" alt="Lab 22 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 24 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 12 Details">
+      <div class="card-header">
+        <i class="ph ph-warning-octagon card-icon"></i>
+        <h2>Lab 24 – Using ARP command for network reconnaissance</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 24.png" alt="Lab 24 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 25 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 13 Details">
+      <div class="card-header">
+        <i class="ph ph-wifi-high card-icon"></i>
+        <h2>Lab 25 – Using the route command to display network information on Linux</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 25.png" alt="Lab 25 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 26 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 14 Details">
+      <div class="card-header">
+        <i class="ph ph-cpu card-icon"></i>
+        <h2>Lab 26 – Using Scanless for easy anonymous port scanning</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 26.png" alt="Lab 26 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 28 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 15 Details">
+      <div class="card-header">
+        <i class="ph ph-sliders-horizontal card-icon"></i>
+        <h2>Lab 28 – Gathering DNS information with dnsenum</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 28.png" alt="Lab 28 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 30 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 16 Details">
+      <div class="card-header">
+        <i class="ph ph-code card-icon"></i>
+        <h2>Lab 30 – How to crack passwords with Hashcat</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 30.png" alt="Lab 30 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 32 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 17 Details">
+      <div class="card-header">
+        <i class="ph ph-file-lock card-icon"></i>
+        <h2>Lab 32 – Spoofing your MAC address with macchanger</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 32.png" alt="Lab 32 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 35 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 18 Details">
+      <div class="card-header">
+        <i class="ph ph-envelope-simple-lock card-icon"></i>
+        <h2>Lab 35 – Hack WPS with Reaver</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 35.png" alt="Lab 35 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 49 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 19 Details">
+      <div class="card-header">
+        <i class="ph ph-crosshair card-icon"></i>
+        <h2>Lab 49 – Hacking WPS networks with Wifite</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 49.png" alt="Lab 49 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 50 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 20 Details">
+      <div class="card-header">
+        <i class="ph ph-bucket card-icon"></i>
+        <h2>Lab 50 – Capturing credentials submitted through http with Wireshark</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 50.png" alt="Lab 50 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 51 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 21 Details">
+      <div class="card-header">
+        <i class="ph ph-lock-key-open card-icon"></i>
+        <h2>Lab 51 – Packet capture with tcpdump</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 51.png" alt="Lab 51 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 58 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 22 Details">
+      <div class="card-header">
+        <i class="ph ph-tree-structure card-icon"></i>
+        <h2>Lab 58 – Fundamental Linux Concepts</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 58.png" alt="Lab 58 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 59 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 23 Details">
+      <div class="card-header">
+        <i class="ph ph-plugs-connected card-icon"></i>
+        <h2>Lab 59 – Linux Operations Advanced Linux Operations</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 59.png" alt="Lab 59 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 60 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 24 Details">
+      <div class="card-header">
+        <i class="ph ph-certificate card-icon"></i>
+        <h2>Lab 60 – Basic File Operations</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 60.png" alt="Lab 60 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 79 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 25 Details">
+      <div class="card-header">
+        <i class="ph ph-radar card-icon"></i>
+        <h2>Lab 79 – Introduction to Bash Scripting</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 79.png" alt="Lab 79 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 80 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 26 Details">
+      <div class="card-header">
+        <i class="ph ph-code-block card-icon"></i>
+        <h2>Lab 80 – More Bash Scripting</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 80.png" alt="Lab 80 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 81 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 27 Details">
+      <div class="card-header">
+        <i class="ph ph-chats-teardrop card-icon"></i>
+        <h2>Lab 81 – Advanced Bash Scripting</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 81.png" alt="Lab 81 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 97 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 28 Details">
+      <div class="card-header">
+        <i class="ph ph-shield-star card-icon"></i>
+        <h2>Lab 97 – Introduction to Python scripting</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 97.png" alt="Lab 97 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 98 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 29 Details">
+      <div class="card-header">
+        <i class="ph ph-magnifying-glass-plus card-icon"></i>
+        <h2>Lab 98 – More Python Scripting</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 98.png" alt="Lab 98 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+    <!-- Lab 99 -->
+    <article class="lab-card" tabindex="0" role="button" aria-label="View Lab 30 Details">
+      <div class="card-header">
+        <i class="ph ph-presentation-chart card-icon"></i>
+        <h2>Lab 99 – More Advanced Python Scripting</h2>
+      </div>
+      <div class="image-wrapper">
+        <img src="Lab 99.png" alt="Lab 99 Screenshot" loading="lazy" />
+        <div class="placeholder-state"><i class="ph ph-image"></i><span>No Image</span></div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- ===== PROJECT INFO SECTION ===== -->
+  <section class="project-specs">
+    <div class="specs-container">
+      <div class="spec-item">
+        <div class="spec-label"><i class="ph ph-graduation-cap"></i> School</div>
+        <div class="spec-value">CODAR TECH AFRICA</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><i class="ph ph-student"></i> Student</div>
+        <div class="spec-value">Sholuade AbdulRazaq</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><i class="ph ph-book-bookmark"></i> Course</div>
+        <div class="spec-value">Cyber Security</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><i class="ph ph-projector-screen"></i> Project</div>
+        <div class="spec-value">CompTIA Security+</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><i class="ph ph-globe"></i> Source</div>
+        <div class="spec-value">101labs.net</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><i class="ph ph-chalkboard-teacher"></i> Instructor</div>
+        <div class="spec-value">Mr Timilehin</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label"><i class="ph ph-calendar-check"></i> Completed</div>
+        <div class="spec-value">January 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy;2026 Security+ Project.</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <button class="close-btn" id="close-lightbox" aria-label="Close">&times;</button>
+      <img id="lightbox-img" src="" alt="Enlarged view" />
+    </div>
+  </div>
+
+  <script>
+    // --- 1. Scroll Progress ---
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      document.getElementById('progress-bar').style.width = `${scrollPercent}%`;
+    });
+
+    // --- 2. Image Handling (Loading & Missing) ---
+    const images = document.querySelectorAll('.image-wrapper img');
+    
+    images.forEach(img => {
+      img.addEventListener('load', () => {
+        img.classList.add('loaded');
+        // Hide the placeholder if image loads successfully
+        const placeholder = img.parentElement.querySelector('.placeholder-state');
+        if(placeholder) placeholder.style.display = 'none';
+      });
+
+      img.addEventListener('error', () => {
+        // If image fails to load, ensure the placeholder is visible
+        const placeholder = img.parentElement.querySelector('.placeholder-state');
+        if(placeholder) placeholder.style.display = 'flex';
+      });
+    });
+
+    // --- 3. Lightbox Logic ---
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.getElementById('close-lightbox');
+    const cards = document.querySelectorAll('.lab-card');
+
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      setTimeout(() => { lightboxImg.src = ''; }, 300); // Clear after fade out
+      document.body.style.overflow = '';
+    }
+
+    // Click events
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const img = card.querySelector('img');
+        if (img && img.src) openLightbox(img.src);
+      });
+      
+      // Keyboard support
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const img = card.querySelector('img');
+          if (img && img.src) openLightbox(img.src);
+        }
+      });
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    
+    // Click outside to close
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // Esc key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>
